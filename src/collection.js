@@ -4,9 +4,10 @@
 Woodhouse.Collection = Backbone.Collection.extend({
   model: Woodhouse.Model,
 
-  // Proxy for Array's move method and also fires a `sort` event
-  move: function() {
-    Array.prototype.move.apply(this.models, arguments);
+  // Move a model from index `from` to index `to`
+  move: function(from, to) {
+    var models = this.models;
+    models.splice(to, 0, models.splice(from, 1)[0]);
     this.trigger('sort', this);
     return this;
   }
