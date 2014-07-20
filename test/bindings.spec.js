@@ -125,6 +125,7 @@ test('bind-text', function() {
   // view-to-model
   this.$input.val('Woodhouse');
   this.$input.trigger('input');
+
   equal(this.model.get('text'), 'Woodhouse');
 });
 
@@ -142,6 +143,7 @@ test('bind-html', function() {
   // view-to-model
   this.$textarea.val('<strong>ISIS</strong>');
   this.$textarea.trigger('input');
+
   equal(this.$html.html(), '&lt;strong&gt;ISIS&lt;/strong&gt;');
 });
 

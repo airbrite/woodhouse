@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ptshih/woodhouse.git",
   "devDependencies": {
     "qunit-bdd": "~0.6.1",
-    "qunit": "~1.14.0"
+    "qunit": "~1.14.0",
+    "almond": "~0.2.9"
   }
 }

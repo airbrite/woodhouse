@@ -15,6 +15,7 @@ import Model from './model';
 import Router from './router';
 
 import './lib/prototype_extensions';
+import './lib/plugins';
 
 // Required dependencies
 var missingDeps = [];
@@ -31,20 +32,45 @@ if (missingDeps.length > 0) {
   console.log('Warning! %s is undefined. Woodhouse aborted.', missingDeps.join(', '));
 }
 
-// Define and export the Woodhouse namespace
-var Woodhouse = {};
-
 // Version string
-Woodhouse.VERSION = '0.2.14';
+export var VERSION = '0.2.14';
 
 // Debug flag
-Woodhouse.DEBUG = false;
+export var DEBUG = false;
 
-// Get jquery
-Woodhouse.$ = $;
+// Log helper
+export var log = function() {
+  if (!Woodhouse.DEBUG || !console) {
+    return;
+  }
 
-// Get lodash
-Woodhouse._ = _;
+  console.log.apply(console, arguments);
+};
 
-export default Woodhouse;
-export { Model, View, CollectionView, Collection, Router };
+// Error Helper
+export var throwError = function(message, name) {
+  var error = new Error(message);
+  error.name = name || 'Error';
+  throw error;
+};
+
+// Centralized XHR pool
+// Allows automatic aborting of pending XHRs when navigate is called
+export var xhrs = [];
+export var addXhr = function(xhr) {
+  // Invalid xhr (or false)
+  // Backbone sync will may return false
+  if (!xhr) {
+    return;
+  }
+  xhrs.push(xhr);
+
+  xhr.always(function() {
+    var index = _.indexOf(xhrs, this);
+    if (index >= 0) {
+      xhrs.splice(index, 1);
+    }
+  }.bind(xhr));
+};
+
+export { $, _, Model, View, Collection, CollectionView, Router };

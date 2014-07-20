@@ -11,8 +11,9 @@ module.exports = function(config) {
       'test/vendor/underscore/underscore.js',
       'test/vendor/jquery/dist/jquery.js',
       'test/vendor/backbone/backbone.js',
+      'test/vendor/almond/almond.js',
+      'dist/woodhouse.js',
       'test/helpers/*.js',
-      'woodhouse.js',
       'test/*.spec.js'
     ]
   });
