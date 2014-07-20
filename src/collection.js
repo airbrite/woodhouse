@@ -4,7 +4,7 @@
 import Model from './model';
 
 var Collection = Backbone.Collection.extend({
-  model: Woodhouse.Model,
+  model: Model,
 
   // Move a model from index `from` to index `to`
   move: function(from, to) {
