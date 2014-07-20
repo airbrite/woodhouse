@@ -5,11 +5,15 @@
 // subviews - Array of Woodhouse.View
 // superview - Woodhouse.View
 //
-// Options (arguments passed in to constructor are added to the property `options` object)
-// locals - Object or Function - Properties that get mixed into the template context during template evaluation
+// Options (arguments passed in to constructor are added to the property
+// `options` object)
+// locals - Object or Function - Properties that get mixed into the template
+// context during template evaluation
 //
 // Prototype
-// template - Function - required - compiled template function (handlebars, etc...)
+// template - Function - required - compiled template function
+// (handlebars, etc...)
+//
 // onBeforeRender - Function - optional
 // onRender - Function - optional
 // onBeforeRemove - Function - optional
@@ -23,7 +27,10 @@
 // Rendering twice shouldn’t trash views just to re-construct them again.
 // Rending multiple times should properly detach and attach event listeners
 
-Woodhouse.View = Backbone.View.extend({
+import Model from './model';
+import Collection from './collection';
+
+var View = Backbone.View.extend({
   constructor: function(options) {
     // this exposes view options to the view initializer
     // this is a backfill since backbone removed the assignment of this.options
@@ -50,14 +57,14 @@ Woodhouse.View = Backbone.View.extend({
   wrapContext: function(context) {
     if (context && !_.isFunction(context) && _.isUndefined(context.on)) {
       if (_.isArray(context)) {
-        context = new Woodhouse.Collection(context);
+        context = new Collection(context);
       } else if (_.isObject(context)) {
-        context = new Woodhouse.Model(context);
+        context = new Model(context);
       }
     } else if (_.isUndefined(context) || _.isNull(context)) {
       Woodhouse.log("*** Does this ever happen?");
-      // Just plane doesn't exist
-      context = new Woodhouse.Collection();
+      // Just plain doesn't exist
+      context = new Collection();
     }
     return context;
   },
@@ -1379,11 +1386,12 @@ Woodhouse.View = Backbone.View.extend({
   },
 
 
-  // Marionette.bindEntityEvents & unbindEntityEvents
+  // Borrowed from Marionette
+  // bindEntityEvents & unbindEntityEvents
   // ---
   //
-  // These methods are used to bind/unbind a backbone "entity" (collection/model)
-  // to methods on a target object.
+  // These methods are used to bind/unbind a backbone "entity"
+  // (collection/model) to methods on a target object.
   //
   // The first parameter, `target`, must have a `listenTo` method from the
   // EventBinder object.
@@ -1481,3 +1489,5 @@ Woodhouse.View = Backbone.View.extend({
     this.unbindEntityEvents(this, this.collection, this.collectionEvents);
   }
 });
+
+export default View;

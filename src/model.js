@@ -6,7 +6,7 @@
 // - relations
 // - computed properties
 
-Woodhouse.Model = Backbone.Model.extend({
+var Model = Backbone.Model.extend({
   constructor: function(attributes, options) {
     var attrs = attributes || {};
     options || (options = {});
@@ -504,3 +504,5 @@ Woodhouse.Model = Backbone.Model.extend({
     return json;
   }
 });
+
+export default Model;

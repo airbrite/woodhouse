@@ -1,7 +1,9 @@
 // Woodhouse.Collection
 // ---
 // Extends Backbone.Collection and sets default model class to Woodhouse.Model
-Woodhouse.Collection = Backbone.Collection.extend({
+import Model from './model';
+
+var Collection = Backbone.Collection.extend({
   model: Woodhouse.Model,
 
   // Move a model from index `from` to index `to`
@@ -12,3 +14,5 @@ Woodhouse.Collection = Backbone.Collection.extend({
     return this;
   }
 });
+
+export default Collection;

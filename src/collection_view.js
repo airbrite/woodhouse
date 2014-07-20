@@ -2,9 +2,12 @@
 // ---
 //
 // Mostly inspired by Marionette
-Woodhouse.CollectionView = Woodhouse.View.extend({
+
+import View from './view';
+
+var CollectionView = View.extend({
   render: function() {
-    Woodhouse.View.prototype.render.apply(this, arguments);
+    View.prototype.render.apply(this, arguments);
 
     this.renderList();
 
@@ -25,3 +28,5 @@ Woodhouse.CollectionView = Woodhouse.View.extend({
     return this;
   }
 });
+
+export default CollectionView;

@@ -1,5 +1,3 @@
-'use strict';
-
 // What is Woodhouse?
 // ---
 // Woodhouse is an extension to Backbone.
@@ -9,6 +7,14 @@
 // - Model relations
 // - Model computed properties
 // - A better Router that aborts XHR requests when navigating
+
+import View from './view';
+import CollectionView from './collection_view';
+import Collection from './collection';
+import Model from './model';
+import Router from './router';
+
+import './lib/prototype_extensions';
 
 // Required dependencies
 var missingDeps = [];
@@ -23,7 +29,6 @@ if ($ === undefined) {
 }
 if (missingDeps.length > 0) {
   console.log('Warning! %s is undefined. Woodhouse aborted.', missingDeps.join(', '));
-  return;
 }
 
 // Define and export the Woodhouse namespace
@@ -40,3 +45,6 @@ Woodhouse.$ = $;
 
 // Get lodash
 Woodhouse._ = _;
+
+export default Woodhouse;
+export { Model, View, CollectionView, Collection, Router };

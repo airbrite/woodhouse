@@ -1,7 +1,7 @@
 // Woodhouse.Router
 // ---
 // Extends Backbone.Router
-Woodhouse.Router = Backbone.Router.extend({
+var Router = Backbone.Router.extend({
   navigate: function(route, options) {
     options = options || {};
 
@@ -34,3 +34,5 @@ Woodhouse.Router = Backbone.Router.extend({
     return true;
   },
 });
+
+export default Router;
