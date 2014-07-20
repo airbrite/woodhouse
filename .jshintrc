@@ -22,11 +22,7 @@
     "$": true,
     "_": true,
     "Woodhouse": true,
-    "App": true,
-    "mixpanel": true,
-    "config": true,
-    "Air": true,
-    "Promise": true
+    "config": true
   },
   "globalstrict": true,
   "quotmark": false,
