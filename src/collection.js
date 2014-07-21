@@ -1,6 +1,7 @@
 // Woodhouse.Collection
 // ---
 // Extends Backbone.Collection and sets default model class to Woodhouse.Model
+
 import Model from './model';
 
 var Collection = Backbone.Collection.extend({

@@ -1,6 +1,7 @@
 // Woodhouse.Router
 // ---
 // Extends Backbone.Router
+
 var Router = Backbone.Router.extend({
   navigate: function(route, options) {
     options = options || {};
