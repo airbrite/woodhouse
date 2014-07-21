@@ -4,6 +4,7 @@
   "description": "Woodhouse, fetch me a rug!",
   "main": "woodhouse.js",
   "scripts": {
+    "build": "rm -rf dist && broccoli build dist",
     "test": "karma start --single-run",
     "watch-test": "karma start"
   },
