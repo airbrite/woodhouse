@@ -6,7 +6,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     meta: {
       testFiles: ['test/**/*.js', '!test/vendor/**'],
-      libFiles: ['woodhouse.js']
+      libFiles: ['src/**/*.js'],
+      distFiles: ['dist/**/*.js']
     },
     karma: {
       options: {
@@ -27,16 +28,23 @@ module.exports = function(grunt) {
       },
       files: ['<%= meta.libFiles %>']
     },
+    broccoli: {
+      dist: {
+        dest: 'dist'
+      }
+    },
     watch: {
       karma: {
-        files: ['<%= meta.testFiles %>', '<%= meta.libFiles %>'],
-        // Ensure karma server is running
-        tasks: ['jshint', 'karma:unit:run']
+        files: ['<%= meta.testFiles %>'],
+        // Make karma server is running: karma:unit:start
+        tasks: ['karma:unit:run']
+      },
+      dev: {
+        files: ['<%= meta.libFiles %>'],
+        tasks: ['jshint', 'broccoli:dist:build', 'karma:unit:run']
       }
     }
   });
-
-  grunt
 
   // Default task(s).
   grunt.registerTask('default', ['ci']);

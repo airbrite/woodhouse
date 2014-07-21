@@ -8,6 +8,11 @@ var relocatedTree = pickFiles('src', {
 
 var compiled = compileES6(relocatedTree, {
   wrapInEval: false,
+  ignoredModules: [
+    'underscore',
+    'jquery',
+    'backbone'
+  ],
   loaderFile: 'woodhouse/lib/loader.js',
   inputFiles: [
     'woodhouse/*.js'

@@ -3,6 +3,7 @@ module.exports = function(config) {
   config.set({
     browsers: ['PhantomJS'],
     frameworks: ['qunit'],
+    port: 9888,
     plugins: [
       'karma-qunit',
       'karma-phantomjs-launcher'

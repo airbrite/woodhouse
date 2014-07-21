@@ -1,8 +1,49 @@
-### About Woodhouse
+# Woodhouse
 
 Woodhouse is a small library that sits on top of Backbone.js that adds basic view and subview management as well as template defined Model-View bindings.
 
 It is a collection of some of my favorite design and implementation patterns that I have worked with across many  ai frontend Javascript frameworks including Backbone.js, Angular.js, Knockout.js, and Ember.js. There is also a slight influence from Cocoa Touch due to my previous background with iOS development.
+
+
+## Install
+
+Use the `dist/woodhouse.js`.
+
+### Bower
+
+```bash
+bower install woodhouse
+```
+
+
+## Usage
+
+Woodhouse is wrapped in a UMD wrapper. It exports its' namespace or attaches it to the global as `Woodhouse` if no module system is detected.
+
+
+## Development
+
+### Getting started
+
+```bash
+npm install && bower install
+npm test
+```
+
+### ES6 Modules
+
+Modules are written in ES6 and transpiled to CJS via Broccoli. To do a one-time compile, run `npm run build`. The built package will be put in `dist`.
+
+### Development Mode
+
+Most likely you want to automatically compile and run tests when you make edits to the source. Run `grunt dev` to start the watcher that will do this for you.
+
+### Globals
+
+Since Underscore, jQuery, and Backbone especially are not great with modules, we assume those are globals.
+
+
+## About Woodhouse
 
 ### What features does Woodhouse have?
 
@@ -21,11 +62,11 @@ It is a collection of some of my favorite design and implementation patterns tha
 
 Woodhouse is not for everyone. It worked really well for our team and what we wanted to accomplish so we just wanted to share it with anyone would could benefit from our learnings.
 
-#### Why should I use Woodhouse instead of another framework like Angular.js?
+### Why should I use Woodhouse instead of another framework like Angular.js?
 
 If you want to use a template driven Model-View binding system such as the ones used by Knockout.js and Angular.js while still taking advantage of Backbone's Model, Collection, and View framework, Woodhouse is perfect for you.
 
-#### Why did you build Woodhouse?
+### Why did you build Woodhouse?
 
 While developing [Celery's](https://trycelery.com) new dashboard, we first started out as using a pure Backbone.js implementation. We quickly realized we were writing lots of boilerplate View rendering code, so we experimented with Marionette.js to see if that could help. Although that did help with alleviating the woes of dealing with subviews, we stll had to re-render the entire view anytime our Models changed.
 

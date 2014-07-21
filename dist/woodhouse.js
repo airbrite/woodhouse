@@ -1,3 +1,4 @@
+// Main entry point
 define('woodhouse', ['woodhouse/index'], function(Woodhouse) {
   return Woodhouse;
 });
@@ -9,6 +10,7 @@ define('woodhouse', ['woodhouse/index'], function(Woodhouse) {
     // Woodhouse.Collection
     // ---
     // Extends Backbone.Collection and sets default model class to Woodhouse.Model
+
     var Model = __dependency1__["default"];
 
     var Collection = Backbone.Collection.extend({
@@ -2165,6 +2167,7 @@ define('woodhouse', ['woodhouse/index'], function(Woodhouse) {
     // Woodhouse.Router
     // ---
     // Extends Backbone.Router
+
     var Router = Backbone.Router.extend({
       navigate: function(route, options) {
         options = options || {};
