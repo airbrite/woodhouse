@@ -113,7 +113,7 @@ test('default binding values', function() {
 
 
 test('bind-text', function() {
-  expect(3);
+  expect(2);
 
   // default
   equal(this.$text.text(), 'Sterling Archer');
@@ -121,10 +121,21 @@ test('bind-text', function() {
   // model-to-view
   this.model.set('text', 'Malory Archer');
   equal(this.$text.text(), 'Malory Archer');
+});
+
+test('bind-val', function() {
+  expect(3);
+
+  // default
+  equal(this.$input.val(), 'Sterling Archer');
+
+  // model-to-view
+  this.model.set('text', 'ISIS');
+  equal(this.$input.val(), 'ISIS');
 
   // view-to-model
   this.$input.val('Woodhouse');
-  this.$input.trigger('input');
+  this.$input.trigger('textchange');
 
   equal(this.model.get('text'), 'Woodhouse');
 });
@@ -142,7 +153,7 @@ test('bind-html', function() {
 
   // view-to-model
   this.$textarea.val('<strong>ISIS</strong>');
-  this.$textarea.trigger('input');
+  this.$textarea.trigger('textchange');
 
   equal(this.$html.html(), '&lt;strong&gt;ISIS&lt;/strong&gt;');
 });
