@@ -29,7 +29,7 @@
     "notEqual": true,
     "deepEqual": true
   },
-  "globalstrict": true,
+  "strict": false,
   "quotmark": false,
   "smarttabs": true,
   "trailing": true,

@@ -24,7 +24,7 @@
     "Woodhouse": true,
     "config": true
   },
-  "globalstrict": true,
+  "strict": false,
   "quotmark": false,
   "smarttabs": true,
   "trailing": true,
