@@ -1,4 +1,5 @@
 // jQuery extensions
+// TODO @kmiyashiro remove dependency
 // ---
 
 // Helper for inserting a child element at a specific index
