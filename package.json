@@ -8,10 +8,10 @@
     "test": "karma start --single-run",
     "watch-test": "karma start"
   },
-  "homepage": "https://github.com/ptshih/woodhouse",
+  "homepage": "https://github.com/airbrite/woodhouse",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ptshih/woodhouse.git"
+    "url": "https://github.com/airbrite/woodhouse.git"
   },
   "keywords": [
     "woodhouse",
