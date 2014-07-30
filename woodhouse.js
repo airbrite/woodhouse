@@ -45,7 +45,7 @@
   var Woodhouse = {};
 
   // Version string
-  Woodhouse.VERSION = '0.2.19';
+  Woodhouse.VERSION = '0.2.21';
 
   // Debug flag
   Woodhouse.DEBUG = false;
