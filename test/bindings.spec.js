@@ -6,6 +6,8 @@ module('Bindings', {
     // TODO (kelly) break these tests up into logical chunks
     var $fixture = $('#qunit-fixture');
     this.$input = $('<input id="input" bind-val="text" />');
+    this.$inputReadOnly = $('<input id="input" bind-val="text" bind-val-read-only="true" />');
+    this.$inputWriteOnly = $('<input id="input" bind-val="text" bind-val-write-only="true" />');
     this.$textarea = $('<textarea id="textarea" bind-val="html"></textarea>');
     this.$contenteditable = $('<div id="contenteditable" contenteditable="true" bind-text="text"></div>');
     this.$text = $('<div id="text" bind-text="text"></div>');
@@ -31,6 +33,8 @@ module('Bindings', {
 
     $.each([
       'input',
+      'inputReadOnly',
+      'inputWriteOnly',
       'textarea',
       'contenteditable',
       'text',
@@ -111,6 +115,31 @@ test('default binding values', function() {
   ok(this.$checked.prop('checked'));
 });
 
+test('bind-val-read-only', function() {
+  // default
+  equal(this.$inputReadOnly.val(), 'Sterling Archer');
+
+  // model-to-view
+  this.model.set('text', 'Malory Archer');
+  equal(this.$inputReadOnly.val(), 'Malory Archer');
+
+  // view-to-model
+  this.$inputReadOnly.val('Sterlin Archer').trigger('input');
+  equal(this.model.get('text'), 'Malory Archer', 'does not write to model');
+});
+
+test('bind-val-write-only', function() {
+  // default
+  equal(this.$inputWriteOnly.val(), '');
+
+  // model-to-view
+  this.model.set('text', 'Malory Archer');
+  equal(this.$inputWriteOnly.val(), '', 'does not read from model');
+
+  // view-to-model
+  this.$inputWriteOnly.val('ISIS').trigger('input');
+  equal(this.model.get('text'), 'ISIS');
+});
 
 test('bind-text', function() {
   expect(3);
