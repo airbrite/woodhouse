@@ -45,7 +45,7 @@
   var Woodhouse = {};
 
   // Version string
-  Woodhouse.VERSION = '0.2.21';
+  Woodhouse.VERSION = '0.2.22';
 
   // Debug flag
   Woodhouse.DEBUG = false;
@@ -2194,7 +2194,7 @@
 
       $.each(node.attributes, function(index, attr) {
         if (regex.test(attr.nodeName)) {
-          attrs[attr.nodeName] = attr.nodeValue;
+          attrs[attr.nodeName] = attr.value;
         }
       });
 
