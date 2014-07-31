@@ -2194,7 +2194,7 @@
 
       $.each(node.attributes, function(index, attr) {
         if (regex.test(attr.nodeName)) {
-          attrs[attr.nodeName] = attr.nodeValue;
+          attrs[attr.nodeName] = attr.value;
         }
       });
 
