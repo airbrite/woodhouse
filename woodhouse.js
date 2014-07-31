@@ -1760,6 +1760,9 @@
           var isSelect = $bindEl.is('select');
           var modelEvents = 'change:' + keypath;
           var viewEvents = isSelect ? 'change' : 'textchange';
+          // Get direction (optional)
+          var writeOnly = $bindEl.attr('bind-val-write-only') === 'true';
+          var readOnly = $bindEl.attr('bind-val-read-only') === 'true';
           // Override events
           viewEvents = $bindEl.attr('bind-val-events') ? $bindEl.attr('bind-val-events') : viewEvents;
 
@@ -1828,11 +1831,15 @@
           });
 
           // Bind view-to-model
-          $bindEl.on(viewEvents, viewToModel);
+          if (!readOnly) {
+            $bindEl.on(viewEvents, viewToModel);
+          }
 
           // Bind model-to-view
-          context.on(modelEvents, modelToView);
-          modelToView(context, context.get(keypath));
+          if (!writeOnly) {
+            context.on(modelEvents, modelToView);
+            modelToView(context, context.get(keypath));
+          }
         }.bind(this),
 
 
