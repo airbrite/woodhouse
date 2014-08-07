@@ -30,6 +30,13 @@ module('Bindings', {
 
     this.$each = $('<div id="each" bind-each="each"><div class="each-item" bind-text="id" bind-attr-data-id="id"></div></div>');
     this.$select = $('<select id="select" bind-each="select" bind-val="selected_id"><option bind-val="id" bind-text="text"></option></select>');
+    this.$nestedSelect = $('<div id="nestedSelect" bind-each="selectCollection" bind-if="selectCollection">\
+        <div bind-each="options">\
+          <select bind-each="values">\
+            <option bind-val="id" bind-text="id"></option>\
+          </select>\
+        </div>\
+      </div>');
 
     $.each([
       'input',
@@ -50,7 +57,8 @@ module('Bindings', {
       'array',
       'attr',
       'each',
-      'select'
+      'select',
+      'nestedSelect'
     ], function(i, name) {
       $fixture.append(this['$' + name]);
     }.bind(this));
@@ -80,6 +88,40 @@ module('Bindings', {
         text: 'two'
       }]),
 
+      selectCollection: new Woodhouse.Collection([{
+        options: new Woodhouse.Collection([{
+          id: 1,
+          values: new Woodhouse.Collection([{
+            id: 3
+          }, {
+            id: 4
+          }])
+        }, {
+          id: 2,
+          values: new Woodhouse.Collection([{
+            id: 3
+          }, {
+            id: 4
+          }])
+        }])
+      }, {
+        options: new Woodhouse.Collection([{
+          id: 1,
+          values: new Woodhouse.Collection([{
+            id: 3
+          }, {
+            id: 4
+          }])
+        }, {
+          id: 2,
+          values: new Woodhouse.Collection([{
+            id: 3
+          }, {
+            id: 4
+          }])
+        }])
+      }]),
+
       uppercase: function() {
         return this.get('text').toUpperCase();
       }.property('text')
@@ -94,7 +136,7 @@ module('Bindings', {
     var bindings = this.view.addBindings({
       el: this.view.el,
       model: this.model
-    }) || [];
+    });
   },
   teardown: function() {}
 });
@@ -296,6 +338,17 @@ test('bind-each with select/option, two ways to select an option', function() {
   // using the model
   this.model.set('selected_id', 1);
   equal(this.$select.val(), '1');
+});
+
+test('bind-each with select, nested inside another bind-each if bind-if', function() {
+  var $selects = this.$nestedSelect.find('select');
+  equal($selects.length, 4, 'creates select for each model');
+  equal($selects.first().find('option').length, 2, 'creates option for each sub model');
+  equal($selects.first().val(), 3, 'defaults to first option');
+
+  $selects.first().children().last().prop('selected', 'selected');
+
+  equal($selects[0].value, '4');
 });
 
 // test('appendBindings', function() {
