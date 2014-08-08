@@ -2076,6 +2076,22 @@
           });
         }.bind(this));
 
+        // Move bind attributes that wipes bindings to the beginning
+        // This is needed because IE reads attrs alphabetically
+        var wipeAttrs = [
+          'bind-with',
+          'bind-if',
+          'bind-unless'
+        ];
+
+        bindAttrs.sort(function(a, b) {
+          if (_.contains(wipeAttrs, a.name)) {
+            return -1;
+          }
+
+          return 0;
+        });
+
         // Map them to a `binding handler`
         _.each(bindAttrs, function(bindAttr) {
           switch (bindAttr.name) {
