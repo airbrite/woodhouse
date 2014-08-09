@@ -1,6 +1,6 @@
 {
   "name": "woodhouse",
-  "version": "0.2.24",
+  "version": "0.2.25",
   "main": "woodhouse.js",
   "ignore": [
     "woodhouse-min.js",
