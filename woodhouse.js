@@ -2087,6 +2087,8 @@
         bindAttrs.sort(function(a, b) {
           if (_.contains(wipeAttrs, a.name)) {
             return -1;
+          } else if (_.contains(wipeAttrs, b.name)) {
+            return 1;
           }
 
           return 0;
