@@ -1072,22 +1072,6 @@
       return value;
     },
 
-    // Wraps the context with a model or collection for the events system
-    wrapContext: function(context) {
-      if (context && !_.isFunction(context) && _.isUndefined(context.on)) {
-        if (_.isArray(context)) {
-          context = new Woodhouse.Collection(context);
-        } else if (_.isObject(context)) {
-          context = new Woodhouse.Model(context);
-        }
-      } else if (_.isUndefined(context) || _.isNull(context)) {
-        Woodhouse.log("*** Does this ever happen?");
-        // Just plane doesn't exist
-        context = new Woodhouse.Collection();
-      }
-      return context;
-    },
-
     getContext: function(options) {
       options = options || {};
 
@@ -1122,9 +1106,7 @@
         }
       }
 
-      // Move wrap context here
-      // context = this.wrapContext(context);
-
+      // context can be undefined
       return context;
     },
 
@@ -1217,6 +1199,10 @@
               view: $bindEl.attr('bind-attr-context')
             });
 
+            if (!context) {
+              return;
+            }
+
             // Binding
             var modelToView = function(model, value) {
               // Eval if value is a function
@@ -1287,6 +1273,10 @@
             view: $bindEl.attr('bind-array-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1352,6 +1342,10 @@
             view: $bindEl.attr('bind-with-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Eval if value is a function
           if (_.isFunction(context)) {
             context = context.call(options.model);
@@ -1393,6 +1387,10 @@
             model: options.model,
             view: $bindEl.attr('bind-if-context') || $bindEl.attr('bind-unless-context')
           });
+
+          if (!context) {
+            return;
+          }
 
           // Remove attribute
           $bindEl.removeAttr(attrName);
@@ -1478,6 +1476,10 @@
             keypath: keypath,
             view: $bindEl.attr('bind-each-context')
           });
+
+          if (!context) {
+            return;
+          }
 
           // Eval if value is a function
           if (_.isFunction(context)) {
@@ -1674,6 +1676,10 @@
             view: $bindEl.attr('bind-text-context') || $bindEl.attr('bind-html-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1772,6 +1778,10 @@
             view: $bindEl.attr('bind-val-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1858,6 +1868,10 @@
             view: $bindEl.attr('bind-checked-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1923,6 +1937,10 @@
             view: $bindEl.attr('bind-visible-context') || $bindEl.attr('bind-hidden-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1968,6 +1986,10 @@
             model: options.model,
             view: $bindEl.attr('bind-enabled-context') || $bindEl.attr('bind-disabled-context')
           });
+
+          if (!context) {
+            return;
+          }
 
           // Remove attribute
           $bindEl.removeAttr(attrName);
