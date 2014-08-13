@@ -45,7 +45,7 @@
   var Woodhouse = {};
 
   // Version string
-  Woodhouse.VERSION = '0.2.25';
+  Woodhouse.VERSION = '0.2.26';
 
   // Debug flag
   Woodhouse.DEBUG = false;
@@ -1075,7 +1075,11 @@
     getContext: function(options) {
       options = options || {};
 
-      // If a context keypath is provided, override the context relative to the view
+      // If a view is provided, bind to specified property of the view
+      // Instead of the default `view.model` property
+      //
+      // Example: if `options.view` is `countries`,
+      // this would set `context` to `view.countries` instead of `view.model`
       if (options.view) {
         return this[options.view];
       }
@@ -1085,28 +1089,33 @@
         return options.collection;
       }
 
-      // No keypath, return model
+      // Binding directly to the model root
       if (_.isUndefined(options.keypath) || _.isNull(options.keypath)) {
         return options.model;
       }
 
+      // If a keypath is specified, we are binding to
+      // a nested property of the model
       var context = options.model.get(options.keypath);
 
-      if (!context) {
-        if (options.model.relations && _.isArray(options.model.relations)) {
-          _.each(options.model.relations, function(relation) {
-            if (options.keypath === relation.key) {
-              if (relation.type === 'collection') {
-                context = new relation.collection();
-              } else {
-                context = new relation.model();
-              }
+      // If binding to an undefined relation, create the context here
+      if (!context && _.isArray(options.model.relations)) {
+        _.each(options.model.relations, function(relation) {
+          if (options.keypath === relation.key) {
+            if (relation.type === 'collection') {
+              context = new relation.collection();
+            } else {
+              context = new relation.model();
             }
-          }.bind(this));
-        }
+          }
+        });
       }
 
-      // context can be undefined
+      // If context is still undefined
+      if (!context) {
+        Woodhouse.log('Attempting to bind to an undefined context.');
+      }
+
       return context;
     },
 
