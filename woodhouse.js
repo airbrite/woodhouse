@@ -1365,7 +1365,7 @@
           this.removeBindings(childBindings);
 
           childBindings = childBindings.concat(this.addBindings({
-            el: $bindEl,
+            el: $bindEl.children(),
             model: context,
             keypathPrefix: keypathPrefix
           }));
