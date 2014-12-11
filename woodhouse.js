@@ -1072,26 +1072,14 @@
       return value;
     },
 
-    // Wraps the context with a model or collection for the events system
-    wrapContext: function(context) {
-      if (context && !_.isFunction(context) && _.isUndefined(context.on)) {
-        if (_.isArray(context)) {
-          context = new Woodhouse.Collection(context);
-        } else if (_.isObject(context)) {
-          context = new Woodhouse.Model(context);
-        }
-      } else if (_.isUndefined(context) || _.isNull(context)) {
-        Woodhouse.log("*** Does this ever happen?");
-        // Just plane doesn't exist
-        context = new Woodhouse.Collection();
-      }
-      return context;
-    },
-
     getContext: function(options) {
       options = options || {};
 
-      // If a context keypath is provided, override the context relative to the view
+      // If a view is provided, bind to specified property of the view
+      // Instead of the default `view.model` property
+      //
+      // Example: if `options.view` is `countries`,
+      // this would set `context` to `view.countries` instead of `view.model`
       if (options.view) {
         return this[options.view];
       }
@@ -1101,29 +1089,32 @@
         return options.collection;
       }
 
-      // No keypath, return model
+      // Binding directly to the model root
       if (_.isUndefined(options.keypath) || _.isNull(options.keypath)) {
         return options.model;
       }
 
+      // If a keypath is specified, we are binding to
+      // a nested property of the model
       var context = options.model.get(options.keypath);
 
-      if (!context) {
-        if (options.model.relations && _.isArray(options.model.relations)) {
-          _.each(options.model.relations, function(relation) {
-            if (options.keypath === relation.key) {
-              if (relation.type === 'collection') {
-                context = new relation.collection();
-              } else {
-                context = new relation.model();
-              }
+      // If binding to an undefined relation, create the context here
+      if (!context && _.isArray(options.model.relations)) {
+        _.each(options.model.relations, function(relation) {
+          if (options.keypath === relation.key) {
+            if (relation.type === 'collection') {
+              context = new relation.collection();
+            } else {
+              context = new relation.model();
             }
-          }.bind(this));
-        }
+          }
+        });
       }
 
-      // Move wrap context here
-      // context = this.wrapContext(context);
+      // If context is still undefined
+      if (!context) {
+        Woodhouse.log('Attempting to bind to an undefined context.');
+      }
 
       return context;
     },
@@ -1217,6 +1208,10 @@
               view: $bindEl.attr('bind-attr-context')
             });
 
+            if (!context) {
+              return;
+            }
+
             // Binding
             var modelToView = function(model, value) {
               // Eval if value is a function
@@ -1287,6 +1282,10 @@
             view: $bindEl.attr('bind-array-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1352,6 +1351,10 @@
             view: $bindEl.attr('bind-with-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Eval if value is a function
           if (_.isFunction(context)) {
             context = context.call(options.model);
@@ -1393,6 +1396,10 @@
             model: options.model,
             view: $bindEl.attr('bind-if-context') || $bindEl.attr('bind-unless-context')
           });
+
+          if (!context) {
+            return;
+          }
 
           // Remove attribute
           $bindEl.removeAttr(attrName);
@@ -1478,6 +1485,10 @@
             keypath: keypath,
             view: $bindEl.attr('bind-each-context')
           });
+
+          if (!context) {
+            return;
+          }
 
           // Eval if value is a function
           if (_.isFunction(context)) {
@@ -1674,6 +1685,10 @@
             view: $bindEl.attr('bind-text-context') || $bindEl.attr('bind-html-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1772,6 +1787,10 @@
             view: $bindEl.attr('bind-val-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1858,6 +1877,10 @@
             view: $bindEl.attr('bind-checked-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1923,6 +1946,10 @@
             view: $bindEl.attr('bind-visible-context') || $bindEl.attr('bind-hidden-context')
           });
 
+          if (!context) {
+            return;
+          }
+
           // Remove attribute
           $bindEl.removeAttr(attrName);
 
@@ -1968,6 +1995,10 @@
             model: options.model,
             view: $bindEl.attr('bind-enabled-context') || $bindEl.attr('bind-disabled-context')
           });
+
+          if (!context) {
+            return;
+          }
 
           // Remove attribute
           $bindEl.removeAttr(attrName);
