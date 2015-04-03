@@ -45,7 +45,7 @@
   var Woodhouse = {};
 
   // Version string
-  Woodhouse.VERSION = '0.2.26';
+  Woodhouse.VERSION = '0.2.27';
 
   // Debug flag
   Woodhouse.DEBUG = false;
@@ -533,7 +533,7 @@
           // Trigger change events for parent keys with wildcard (*) notation
           var keys = changes[i].split('.');
           for (var n = keys.length - 1; n > 0; n--) {
-            var parentKey = _.first(keys, n).join('.');
+            var parentKey = _.take(keys, n).join('.');
             var wildcardKey = parentKey + '.' + '*';
 
             if (!_.has(alreadyTriggered, wildcardKey)) {
